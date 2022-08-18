@@ -1,28 +1,28 @@
-import livros from "../models/livro.js";
+import autor from "../models/autor.js";
 
-class LivroController{
+class autorController{
 
     //GET
 
-    static listarLivros= (req,res)=>{
-        livros.find((err,livros)=>{
-            res.status(200).json(livros);
+    static listarautor= (req,res)=>{
+        autor.find((err,autor)=>{
+            res.status(200).json(autor);
         })
     }
 
     //GET
 
-    static listraLivroporID = (req, res)=>{
+    static listraautorporID = (req, res)=>{
 
         const id= req.params.id;
 
-        livros.findById(id,(err,livros)=>{
+        autor.findById(id,(err,autor)=>{
 
             if(err){
                 res.status(400).send({message : `${err.message}`});
             }
             else{
-                res.status(200).send(livros)
+                res.status(200).send(autor)
             }
 
         })
@@ -31,26 +31,27 @@ class LivroController{
 
     //POST
 
-    static criaLivro = (req,res)=>{
-        let livro=new livros(req.body)
+    static criaautor = (req,res)=>{
+        
+        let autor1=new autor(req.body)
 
-        livro.save((err)=>{
+        autor1.save((err)=>{
             if(err){
                 res.status(500).send({message : `${err.message} error on registering book`})
                 console.log(`Error on creation, type: ${err}`);
             }
             else{
-                res.status(201).send(livro.toJSON())
+                res.status(201).send(autor1.toJSON())
             }
         })
     }
 
     //PUT
 
-    static atualizarLivro = (req,res)=>{
+    static atualizarautor = (req,res)=>{
         const id = req.params.id;
 
-        livros.findByIdAndUpdate(id,{$set: req.body}, (err)=>{
+        autor.findByIdAndUpdate(id,{$set: req.body}, (err)=>{
             if(!err){
                 res.status(200).send({message: 'Book updated successfully'});
             }
@@ -62,10 +63,10 @@ class LivroController{
 
     //DELETE
 
-    static excluirLivro = (req,res)=>{
+    static excluirautor = (req,res)=>{
         const id = req.params.id;
 
-        livros.findByIdAndDelete(id, (err)=>{
+        autor.findByIdAndDelete(id, (err)=>{
             if(err){
                 res.status(500).send({message : `${err.message} error on deleting book`});
             }
@@ -77,4 +78,4 @@ class LivroController{
 
 }
 
-export default LivroController;
+export default autorController;
